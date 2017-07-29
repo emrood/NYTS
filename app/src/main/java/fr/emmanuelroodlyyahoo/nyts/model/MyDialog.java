@@ -63,7 +63,7 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_layout, null);
-        int width = getResources().getDimensionPixelSize(R.dimen.dialog_width);//appel d'une ressource de type dimension
+        int width = getResources().getDimensionPixelSize(R.dimen.dialog_width);
         int height = getResources().getDimensionPixelSize(R.dimen.dialog_height);
         getDialog().getWindow().setLayout(width, height); //redefinition des dimensions du fragment
         getDialog().setTitle("Settings");
@@ -99,7 +99,7 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //ouverture d'un fragment DatePicker avec onClick
+                //ouverture d'un fragment DatePicker avec onClick pour recevoir la date choisit par l'utilisateur via un calendrier
                 d.setTargetFragment(MyDialog.this, 300);
                 d.show(fh, "Date");
                 etDate.requestFocus();
@@ -137,10 +137,12 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
     }
 
 
+    //methode recevant les donnees du fragment DatePicker
     public void getValueFromChild( int j, int m, int y) {
         jours = j;
         mois = m;
         annee = y;
         etDate.setText(j+"/"+m+"/"+y);
+
     }
 }

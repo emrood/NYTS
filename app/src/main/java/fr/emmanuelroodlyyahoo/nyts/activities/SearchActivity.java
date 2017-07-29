@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class SearchActivity extends AppCompatActivity {
     ArticleArrayAdapter myAdapter;
     MyDialog d; //appel d'un fragment personnalise
     FragmentManager fm;
+    boolean chargement = false;
+    static int page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     @Override
@@ -93,7 +97,7 @@ public class SearchActivity extends AppCompatActivity {
         String key = "a341c7b04a4846318b10b134e35b5c6c";
         RequestParams params = new RequestParams();
         params.put("api-key", key);
-        params.put("page", 0);
+        params.put("page", page);
         if(!query.isEmpty() && query != null){
             params.put("q", query);
         }
@@ -142,6 +146,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 try{
                     articleJSONResults = response.getJSONObject("response").getJSONArray("docs");
+                    chargement = true;
                     myAdapter.clear();
                     myAdapter.addAll(Article.fromJSONArray(articleJSONResults));
                     myAdapter.notifyDataSetChanged();
@@ -170,6 +175,7 @@ public class SearchActivity extends AppCompatActivity {
         transfert.putBoolean("foreign", foreign);
         transfert.putBoolean("national", national);
         transfert.commit();
+        page = 0;
         myAdapter.clear();
         btnSearch.performClick();
         myAdapter.notifyDataSetChanged();

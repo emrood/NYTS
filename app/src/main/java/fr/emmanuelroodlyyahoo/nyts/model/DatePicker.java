@@ -32,7 +32,7 @@ public class DatePicker extends DialogFragment {
     public Date selectedDate;
 
 
-    public MonConnecteur monConnecteur;
+    public MonConnecteur monConnecteur; //Interface gerant les transfert de donnees | Fragment-Activite-Fragment
     static int year;
     static int month;
     static int day;
@@ -41,10 +41,10 @@ public class DatePicker extends DialogFragment {
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.date_picker, null);
         getDialog().setTitle("Pick a date");
-        myDate = (android.widget.DatePicker) root.findViewById(R.id.myDate);
+        myDate = (android.widget.DatePicker) root.findViewById(R.id.myDate); //Castre de l'objet DatePicker
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance(); //Instanciation d'un object de la Classe Calendar afin de recevoir la date du systeme
+        calendar.setTimeInMillis(System.currentTimeMillis());//generer la date actuel a partir du systeme android
         myDate.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new android.widget.DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(android.widget.DatePicker datePicker, int i, int i1, int i2) {
@@ -52,9 +52,8 @@ public class DatePicker extends DialogFragment {
                 year = i;
                 month = i1;
                 day = i2;
-                MyDialog dialog = (MyDialog) getTargetFragment();
-                dialog.getValueFromChild(day, month, year);
-                //monConnecteur.getValueFromChild("mini");// i+ "/" +i1+ "/" +i2
+                MyDialog dialog = (MyDialog) getTargetFragment();//Instanciation du Fragment parent
+                dialog.getValueFromChild(day, month, year); //Transfert des donnees au fragment parent
                 dismiss();
             }
         });
@@ -63,19 +62,22 @@ public class DatePicker extends DialogFragment {
         return root;
     }
 
+
+    //methode de liaison entre fragment et activite
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if(activity instanceof MonConnecteur){
-            monConnecteur = (MonConnecteur) activity;
+            monConnecteur = (MonConnecteur) activity; // appel de la classe interface MonConnecteur: Transfert de donnees Fragment/Activite
         }
     }
 
+    //methode le liaison de deux fragments
     @Override
     public void onAttachFragment(Fragment childFragment) {
         super.onAttachFragment(childFragment);
         if(childFragment instanceof MonConnecteur){
-            monConnecteur = (MonConnecteur) childFragment;
+            monConnecteur = (MonConnecteur) childFragment; // Appel de la classe interface MonConnecteur responsable du transfert des donnees Fragment/Fragment
         }
     }
     /*
