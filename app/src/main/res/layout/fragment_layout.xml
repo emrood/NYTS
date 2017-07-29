@@ -11,7 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="170dp"
         android:src="@mipmap/ic_ly" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="90dp"
         android:ems="10"
         android:inputType="date" />
 
@@ -61,26 +61,33 @@
         android:textSize="18sp" />
 
     <CheckBox
-        android:id="@+id/cbArts"
+        android:id="@+id/cbNone"
         android:layout_width="143dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="180dp"
-        android:text="Arts" />
+        android:text="None" />
 
     <CheckBox
-        android:id="@+id/cbStyle"
+        android:id="@+id/cbOpEd"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
-        android:text="Fashion/Style" />
+        android:text="OpEd" />
 
     <CheckBox
-        android:id="@+id/cbSport"
+        android:id="@+id/cbForeign"
         android:layout_width="154dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="180dp"
-        android:text="Sport" />
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="210dp"
+        android:text="Foreign" />
+    <CheckBox
+        android:id="@+id/cbNational"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="100dp"
+        android:text="National" />
 
     <LinearLayout
         android:layout_width="match_parent"

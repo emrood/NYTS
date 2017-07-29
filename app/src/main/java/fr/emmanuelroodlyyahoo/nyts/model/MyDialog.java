@@ -46,9 +46,10 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
 
     EditText etDate;
     Spinner spFilter;
-    CheckBox cbArts; // element visuel checkBox Arts
-    CheckBox cbSport; // element visuel Checkbox Sport
-    CheckBox cbStyle;//element visuel CheckBox Style
+    CheckBox cbNone; // element visuel checkBox Arts
+    CheckBox cbForeign; // element visuel Checkbox Sport
+    CheckBox cbOpEd;//element visuel CheckBox Style
+    CheckBox cbNational;
     Button btnSave; //boutton Save
     Button btnClose;
     List<String> spinValues; // variable qui va contenir les valeurs du spinner
@@ -70,14 +71,15 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
         fh = getFragmentManager();
         etDate = (EditText) rootView.findViewById(R.id.etDate);
         spFilter = (Spinner) rootView.findViewById(R.id.spFilter);
-        cbArts = (CheckBox) rootView.findViewById(R.id.cbArts);
-        cbSport = (CheckBox) rootView.findViewById(R.id.cbSport);
-        cbStyle = (CheckBox) rootView.findViewById(R.id.cbStyle);
+        cbNone = (CheckBox) rootView.findViewById(R.id.cbNone);
+        cbForeign = (CheckBox) rootView.findViewById(R.id.cbForeign);
+        cbOpEd = (CheckBox) rootView.findViewById(R.id.cbOpEd);
+        cbNational = (CheckBox) rootView.findViewById(R.id.cbNational);
         btnSave = (Button) rootView.findViewById(R.id.btnSave);
         btnClose = (Button) rootView.findViewById(R.id.btnClose);
         spinValues = new ArrayList<>(); //List contenant les valeurs a afficher dans le spinner
-        spinValues.add(0, "Newest");
-        spinValues.add(1, "Oldest");
+        spinValues.add(0, "newest");
+        spinValues.add(1, "oldest");
         spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, spinValues); // adapter qui va lier le spinner a la list
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFilter.setAdapter(spinnerAdapter);//liaison du spinner a la liste
@@ -120,7 +122,7 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
                 SearchActivity searchActivity = (SearchActivity) getActivity();
                 //transfert des donnees a l'activite parent via la methode getValuesFromFragment
 
-                searchActivity.getValuesFromFragment(jours, mois, annee, spFilter.getSelectedItem().toString(), cbSport.isChecked(), cbStyle.isChecked(), cbArts.isChecked());
+                searchActivity.getValuesFromFragment(jours, mois, annee, spFilter.getSelectedItem().toString(), cbNone.isChecked(), cbForeign.isChecked(), cbNational.isChecked());
                 dismiss();
 
             }

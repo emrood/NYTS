@@ -1,6 +1,8 @@
 package fr.emmanuelroodlyyahoo.nyts.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -82,21 +84,6 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     public void onArticleSearch(View view) {
         String query = etQuery.getText().toString();
@@ -107,7 +94,46 @@ public class SearchActivity extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.put("api-key", key);
         params.put("page", 0);
-        params.put("q", query);
+        if(!query.isEmpty() && query != null){
+            params.put("q", query);
+        }
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("SearchParams", Context.MODE_PRIVATE);
+        String sort = prefs.getString("sort", null);
+        if(sort == "newest"){
+            params.put("sort", "newest");
+        }else if(sort == "oldest"){
+            params.put("sort", "oldest");
+        }
+
+        int year = prefs.getInt("year", -1);
+        int month = prefs.getInt("month", -1);
+        int day = prefs.getInt("day", -1);
+
+        if(!(year == -1 || month == -1 || day == -1)){
+            month++;
+            String one = month < 10 ? "0" : "";
+            String two = day < 10 ? "0" : "";
+            String begin = year + one + month + two + day ;
+            params.put("begin_date", begin);
+        }
+
+        String filter = "";
+        if(prefs.getBoolean("none", false)) {
+            filter = "\"None\"";
+        }
+
+        if(prefs.getBoolean("foreign", false)) {
+            filter = filter + " \"Foreign\"";
+        }
+
+        if(prefs.getBoolean("sport", false)) {
+            filter = filter + " \"Sports\"";
+        }
+
+        if (filter != null && !filter.isEmpty()) {
+            params.put("fq", "news_desk:(" + filter + ")");
+        }
+
         client.get(url, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -116,8 +142,9 @@ public class SearchActivity extends AppCompatActivity {
 
                 try{
                     articleJSONResults = response.getJSONObject("response").getJSONArray("docs");
+                    myAdapter.clear();
                     myAdapter.addAll(Article.fromJSONArray(articleJSONResults));
-                    //myAdapter.notifyDataSetChanged();
+                    myAdapter.notifyDataSetChanged();
                     Log.d("DEBUG", articles.toString());
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -132,7 +159,23 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     //methode qui va retournee les valeurs du fragment de type myDialog
-    public void getValuesFromFragment(int jours, int mois, int annee , String r_spinner, boolean sport, boolean fashion, boolean art){
-        Toast.makeText(this, "parametres: " + jours +"/"+ mois +"/"+ annee +"/" + " | " + r_spinner + " | " + String.valueOf(sport) + " | " + String.valueOf(fashion) + " | " + String.valueOf(art) + " | ", Toast.LENGTH_LONG).show();
+    public void getValuesFromFragment(int jours, int mois, int annee , String r_spinner, boolean none, boolean foreign, boolean national){
+        Toast.makeText(this, "parametres: " + jours +"/"+ mois +"/"+ annee +"/" + " | " + r_spinner + " | " + String.valueOf(none) + " | " + String.valueOf(foreign) + " | " + String.valueOf(national) + " | ", Toast.LENGTH_LONG).show();
+        SharedPreferences.Editor transfert = getApplicationContext().getSharedPreferences("SearchParams", Context.MODE_PRIVATE).edit();
+        transfert.putInt("year", annee);
+        transfert.putInt("month", mois);
+        transfert.putInt("day", jours);
+        transfert.putString("sort", r_spinner);
+        transfert.putBoolean("none", none);
+        transfert.putBoolean("foreign", foreign);
+        transfert.putBoolean("national", national);
+        transfert.commit();
+        myAdapter.clear();
+        btnSearch.performClick();
+        myAdapter.notifyDataSetChanged();
+    }
+
+    public void onFilterClick(MenuItem item) {
+        d.show(fm, "Settings");
     }
 }

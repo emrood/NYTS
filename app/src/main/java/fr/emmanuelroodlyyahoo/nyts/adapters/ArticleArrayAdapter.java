@@ -18,6 +18,8 @@ import java.util.List;
 import fr.emmanuelroodlyyahoo.nyts.R;
 import fr.emmanuelroodlyyahoo.nyts.model.Article;
 
+
+
 /**
  * Created by Emmanuel Roodly on 28/07/2017.
  */
@@ -39,14 +41,19 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.ivImage);
 
+
         imageView.setImageResource(0);
 
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(article.getHeadline());
+        //TextView tvParagraphe = (TextView) convertView.findViewById(R.id.tvParagraphe);
+        //tvParagraphe.setText(article.getParagraph());
 
         String thumbnail = article.getThumbnail();
         if(!TextUtils.isEmpty(thumbnail)){
-            Picasso.with(getContext()).load(thumbnail).into(imageView);
+            Picasso.with(getContext()).load(thumbnail).placeholder(R.drawable.ic_nyt).fit().centerCrop().into(imageView);
+        }else{
+            Picasso.with(getContext()).load(R.mipmap.zebe).fit().centerCrop().into(imageView);
         }
 
         return convertView;
