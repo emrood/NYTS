@@ -132,7 +132,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     //methode qui va retournee les valeurs du fragment de type myDialog
-    public void getValuesFromFragment(String r_date, String r_spinner, boolean sport, boolean fashion, boolean art){
-        Toast.makeText(this, "parametres: " + r_date + " | " + r_spinner + " | " + String.valueOf(sport) + " | " + String.valueOf(fashion) + " | " + String.valueOf(art) + " | ", Toast.LENGTH_LONG).show();
+    public void getValuesFromFragment(int jours, int mois, int annee , String r_spinner, boolean sport, boolean fashion, boolean art){
+        Toast.makeText(this, "parametres: " + jours +"/"+ mois +"/"+ annee +"/" + " | " + r_spinner + " | " + String.valueOf(sport) + " | " + String.valueOf(fashion) + " | " + String.valueOf(art) + " | ", Toast.LENGTH_LONG).show();
     }
 }

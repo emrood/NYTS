@@ -53,7 +53,7 @@ public class DatePicker extends DialogFragment {
                 month = i1;
                 day = i2;
                 MyDialog dialog = (MyDialog) getTargetFragment();
-                dialog.getValueFromChild(day+"/"+month+"/"+year);
+                dialog.getValueFromChild(day, month, year);
                 //monConnecteur.getValueFromChild("mini");// i+ "/" +i1+ "/" +i2
                 dismiss();
             }

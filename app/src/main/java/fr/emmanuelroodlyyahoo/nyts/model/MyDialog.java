@@ -40,6 +40,9 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
         this.etDate.setText(i);
     }
 
+    static int jours;
+    static int mois;
+    static int annee;
 
     EditText etDate;
     Spinner spFilter;
@@ -117,7 +120,7 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
                 SearchActivity searchActivity = (SearchActivity) getActivity();
                 //transfert des donnees a l'activite parent via la methode getValuesFromFragment
 
-                searchActivity.getValuesFromFragment(etDate.getText().toString(), spFilter.getSelectedItem().toString(), cbSport.isChecked(), cbStyle.isChecked(), cbArts.isChecked());
+                searchActivity.getValuesFromFragment(jours, mois, annee, spFilter.getSelectedItem().toString(), cbSport.isChecked(), cbStyle.isChecked(), cbArts.isChecked());
                 dismiss();
 
             }
@@ -132,7 +135,10 @@ public class MyDialog extends DialogFragment implements EditDateDialogListener, 
     }
 
 
-    public void getValueFromChild(String v) {
-        etDate.setText(v);
+    public void getValueFromChild( int j, int m, int y) {
+        jours = j;
+        mois = m;
+        annee = y;
+        etDate.setText(j+"/"+m+"/"+y);
     }
 }

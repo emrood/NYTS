@@ -5,5 +5,5 @@ package fr.emmanuelroodlyyahoo.nyts.model;
  */
 
 public interface MonConnecteur {
-    public void getValueFromChild(String v);
+    public void getValueFromChild(int d, int m, int y);
 }
