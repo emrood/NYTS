@@ -6,7 +6,7 @@
         android:id="@+id/shareItem"
         app:showAsAction="ifRoom"
         android:title="share"
-        android:icon="@mipmap/ics"
+        android:icon="@drawable/ic_22"
         android:onClick="onShareLink"
         android:actionProviderClass="android.widget.ShareActionProvider"/>
 

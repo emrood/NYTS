@@ -48,7 +48,7 @@ public class DatePicker extends DialogFragment {
         myDate.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new android.widget.DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(android.widget.DatePicker datePicker, int i, int i1, int i2) {
-                Toast.makeText(getContext(), "year: " +i+ " | month: " +i1+ "| day: " +i2, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "year: " +i+ " | month: " +i1+ "| day: " +i2, Toast.LENGTH_SHORT).show();
                 year = i;
                 month = i1;
                 day = i2;
