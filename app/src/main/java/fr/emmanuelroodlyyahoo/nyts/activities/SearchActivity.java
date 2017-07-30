@@ -123,7 +123,7 @@ public class SearchActivity extends AppCompatActivity {
 
                     if(!s.isEmpty() && s != null) {
                         params.put("q", s);//ajout des parametres de recherche si non nul
-
+                        myAdapter.clear();
                         SharedPreferences prefs = getApplicationContext().getSharedPreferences("SearchParams", Context.MODE_PRIVATE);
                         String sort = prefs.getString("sort", null);
                         if (sort == "newest") {
